@@ -1,21 +1,23 @@
 #include "Player.h"
 
 Player::Player(const sf::Texture& texture)
-	:Entity(texture,10),
-	m_try_jump(false)
+	:Entity(texture,0),
+	m_try_jump(false),
+	m_current_state(IdleRight),
+	m_is_hited(false)
 {
-	m_animation.addAnimation(IdleLeft, Animation::AnimationData({ 32,32*0,-32,32 }, sf::milliseconds(50), 11));
-	m_animation.addAnimation(IdleRight, Animation::AnimationData({ 0,32*0,32,32 }, sf::milliseconds(50), 11));
-	m_animation.addAnimation(MoveLeft, Animation::AnimationData({ 32,32*1,-32,32 }, sf::milliseconds(50), 12));
-	m_animation.addAnimation(MoveRight, Animation::AnimationData({ 0,32*1,32,32 }, sf::milliseconds(50), 12));
-	m_animation.addAnimation(JumpLeft, Animation::AnimationData({ 32,32*2,-32,32 }, sf::milliseconds(50), 1, false));
-	m_animation.addAnimation(JumpRight, Animation::AnimationData({ 0,32*2,32,32 }, sf::milliseconds(50), 1, false));
-	m_animation.addAnimation(FallLeft, Animation::AnimationData({ 32,32*3,-32,32 }, sf::milliseconds(50), 1, false));
-	m_animation.addAnimation(FallRight, Animation::AnimationData({ 0,32*3,32,32 }, sf::milliseconds(50), 1, false)); 
-	m_animation.addAnimation(HitLeft,  Animation::AnimationData({ 32,32*4,-32,32 }, sf::milliseconds(50), 7, false));
-	m_animation.addAnimation(HitRight,  Animation::AnimationData({ 0,32*4,32,32 }, sf::milliseconds(50), 7,false));
-	//m_animation.addAnimation(IdleLeft, Animation::AnimationData({ 32,0,-32,32 }, sf::milliseconds(50), 11));
-	//m_animation.addAnimation(IdleRight, Animation::AnimationData({ 0,0,32,32 }, sf::milliseconds(50), 11));
+	m_animation.addAnimation(IdleLeft, Animation::AnimationData({ 32,32 * 0,-32,32 }, sf::milliseconds(50), 11));
+	m_animation.addAnimation(IdleRight, Animation::AnimationData({ 0,32 * 0,32,32 }, sf::milliseconds(50), 11));
+	m_animation.addAnimation(MoveLeft, Animation::AnimationData({ 32,32 * 1,-32,32 }, sf::milliseconds(50), 12));
+	m_animation.addAnimation(MoveRight, Animation::AnimationData({ 0,32 * 1,32,32 }, sf::milliseconds(50), 12));
+	m_animation.addAnimation(JumpLeft, Animation::AnimationData({ 32,32 * 2,-32,32 }, sf::milliseconds(50), 1, false));
+	m_animation.addAnimation(JumpRight, Animation::AnimationData({ 0,32 * 2,32,32 }, sf::milliseconds(50), 1, false));
+	m_animation.addAnimation(FallLeft, Animation::AnimationData({ 32,32 * 3,-32,32 }, sf::milliseconds(50), 1, false));
+	m_animation.addAnimation(FallRight, Animation::AnimationData({ 0,32 * 3,32,32 }, sf::milliseconds(50), 1, false));
+	m_animation.addAnimation(HitLeft, Animation::AnimationData({ 32,32 * 4,-32,32 }, sf::milliseconds(50), 7, false));
+	m_animation.addAnimation(HitRight, Animation::AnimationData({ 0,32 * 4,32,32 }, sf::milliseconds(50), 7, false));
+	m_animation.addAnimation(DieLeft, Animation::AnimationData({ 32 * 7,32 * 5,-32,-32 }, sf::milliseconds(50), 1, false));
+	m_animation.addAnimation(DieRight, Animation::AnimationData({ 32 * 6,32 * 5,32,-32 }, sf::milliseconds(50), 1, false));
 	m_animation.setAnimation(m_current_state);
 }
 
@@ -45,13 +47,13 @@ void Player::jump()
 
 void Player::moveLeft()
 {
-	if(!m_is_hited)
+	if(!m_is_hited && isAlive())
 		addVelocity(sf::Vector2f(-100.f, 0.f));
 }
 
 void Player::moveRight()
 {
-	if (!m_is_hited)
+	if (!m_is_hited && isAlive())
 		addVelocity(sf::Vector2f(100.f, 0.f));
 }
 
@@ -83,12 +85,18 @@ void Player::setState()
 {
 	States new_state = m_current_state;
 
+	
 	if (m_is_hited)
 	{
 		if (m_state_time < sf::seconds(0.7))
 			new_state = (States)(HitLeft | (new_state & 1));
 		else
 			m_is_hited = false;
+	}
+	else if (!isAlive())
+	{
+		new_state = (States)(DieLeft | (new_state & 1));
+		m_is_hited = false;
 	}
 	else
 	{

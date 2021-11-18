@@ -17,6 +17,8 @@ public:
 	sf::Vector2f getCenter();
 	void setCenter(const sf::Vector2f& player_pos);
 
+	sf::Vector2f getWorldSize();
+
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

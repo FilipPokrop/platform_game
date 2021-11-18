@@ -4,15 +4,18 @@
 #include <SFML/Graphics.hpp>
 #include "World.h"
 #include <iostream>
+#include "StateStack.h"
+
 
 int main()
 {
     //std::cout << true;
     uint32_t frame_counter = 0;
     sf::Time frame_time = sf::Time::Zero;
-    sf::Font font;
-    font.loadFromFile("media/fonts/Sansation.ttf");
-    sf::Text frames("FPS: "+std::to_string(frame_counter),font);
+    FontHolder fonts;
+    fonts.load(Fonts::Menu, "media/fonts/Sansation.ttf");
+    //.loadFromFile("media/fonts/Sansation.ttf");
+    sf::Text frames("FPS: "+std::to_string(frame_counter),fonts.get(Fonts::Menu));
     
     sf::RenderWindow window(sf::VideoMode(640*2, 480*2), "SFML works!",sf::Style::None);
     window.setKeyRepeatEnabled(false);
@@ -27,8 +30,11 @@ int main()
     texture_holder.load(Textures::Map, "media/Free/Terrain/Terrain (16x16).png");
     texture_holder.load(Textures::WorldGui, "media/textures/Gui/World.png");
     
+    State::Context context(texture_holder, fonts, window);
+    StateStack state_stack(&context);
+    //state_stack.pushState(StateID::Game);
     
-    World world(&window,texture_holder);
+    //World world(&window,texture_holder);
 
     sf::Clock clock;
     while ( window.isOpen())
@@ -37,8 +43,8 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (world.handleEvent(event))
-                continue;
+            state_stack.handleEvent(event);
+
 
             if (event.type == sf::Event::Closed)
                 window.close();
@@ -52,8 +58,8 @@ int main()
             
         }
 
-        world.handleEvents();  
-        world.update(delta_time);
+        state_stack.handleEvents();  
+        state_stack.update(delta_time);
        
         frame_time += delta_time;
         frame_counter++;
@@ -66,9 +72,12 @@ int main()
 
         window.clear(sf::Color::Cyan);
         
-        world.draw();
+        state_stack.draw();
         window.draw(frames);
         window.display();
+
+        if (state_stack.isEmpty())
+            window.close();
     }
     
     return 0;

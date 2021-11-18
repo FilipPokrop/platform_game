@@ -16,7 +16,9 @@ public:
 		FallLeft,
 		FallRight,
 		HitLeft,
-		HitRight
+		HitRight,
+		DieLeft,
+		DieRight
 	};
 	Player(const sf::Texture& texture);
 

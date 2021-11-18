@@ -25,7 +25,12 @@ void Duck::colisionWithPlayer(Entity* player, const Colision::ContactData& conta
 	{
 		//std::cout << "aaa";
 		if (contact_data.contact_normal.y < 0)
+		{
 			kill();
+			player->setVelocity(sf::Vector2f(player->getVelocity().x, -200.f));
+		}
+			
+
 		else
 		{
 			player->getAtack(1);

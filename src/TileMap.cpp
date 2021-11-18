@@ -89,6 +89,11 @@ void TileMap::setCenter(const sf::Vector2f& player_pos)
 
 }
 
+sf::Vector2f TileMap::getWorldSize()
+{
+	return sf::Vector2f(m_data.getSize())*m_tile_size;
+}
+
 void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();

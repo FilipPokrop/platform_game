@@ -17,6 +17,9 @@ set(SOURCES
     src/Lives.cpp
     src/TileMap.cpp
     src/World.cpp
+    src/State.cpp
+    src/StateStack.cpp
+    src/GameState.cpp
 )
 
 set(HEADERS
@@ -32,7 +35,12 @@ set(HEADERS
     include/World.h
     include/ResourceHolder.h
     include/ResourceHolder.inl
-    include/ResourceIdentifiers.h)
+    include/ResourceIdentifiers.h
+    include/State.h
+    include/StateStack.h
+    include/StateIdentifiers.h
+    include/GameState.h
+)
 
 add_executable(game ${SOURCES} ${HEADERS})
 

@@ -17,6 +17,7 @@ public:
 	void setOnGround(bool on_ground);
 
 	sf::Vector2f getVelocity() const;
+	void setVelocity(const sf::Vector2f& vel);
 	void addVelocity(const sf::Vector2f& vel);
 
 	sf::Vector2f getAcceleration() const;
