@@ -10,6 +10,7 @@
 #include "Duck.h"
 #include "ResourceIdentifiers.h"
 #include "Lives.h"
+#include "MainCharacter.h"
 
 class World
 {
@@ -35,7 +36,7 @@ private:
 
 	const TextureHolder& m_texture_holder;
 
-	Player* m_player;
+	MainCharacter* m_main_character;
 	TileMap* m_map;
 	Lives m_lives;
 

@@ -1,8 +1,10 @@
 #include "StateStack.h"
 
 #include "GameState.h"
+#include "GameOverState.h"
 
 #include <cassert>
+#include <iostream>
 
 StateStack::PendingChange::PendingChange(Action _action, StateID _id)
 	:action(_action),
@@ -17,6 +19,7 @@ StateStack::StateStack(State::Context* context)
 	m_conext(*context)
 {
 	registerState<GameState>(StateID::Game);
+	registerState<GemeOverState>(StateID::GameOver);
 	pushState(StateID::Game);
 	applyPendingChange();
 }
@@ -40,6 +43,7 @@ void StateStack::update(const sf::Time& dt)
 {
 	for (auto iter = m_state_stack.rbegin(); iter != m_state_stack.rend(); ++iter)
 	{
+		//std::cout << "dupa";
 		if (!(*iter)->update(dt))
 			break;
 	}

@@ -7,11 +7,15 @@ GameState::GameState(StateStack* stack, Context& context)
 
 }
 
+//GameState::~GameState()
+//{
+//}
+
 bool GameState::update(const sf::Time& dt)
 {
 	m_world.update(dt);
 	if (m_world.endGame())
-		reqestStackPop();
+		reqestStackPush(StateID::GameOver);
 	return true;
 }
 

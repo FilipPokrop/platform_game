@@ -17,7 +17,7 @@ enum class Textures
 
 enum class Fonts
 {
-	Menu
+	Menu,
 };
 
 typedef ResourceHolder<sf::Texture, Textures> TextureHolder;

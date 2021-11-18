@@ -19,7 +19,7 @@ void Entity::update(const sf::Time dt)
 {
 	m_animation.update(dt);
 	sf::Vector2f pos = getPosition();
-	std::cout<< std::setprecision(10) << "(" << pos.x << ", " << pos.y << ")" << std::endl;
+	//std::cout<< std::setprecision(10) << "(" << pos.x << ", " << pos.y << ")" << std::endl;
 	pos += (m_acceleration * dt.asSeconds() * 0.5f + m_velocity) * dt.asSeconds();
 	m_velocity += m_acceleration * dt.asSeconds();
 

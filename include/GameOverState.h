@@ -1,14 +1,13 @@
 #pragma once
 
 #include "State.h"
-#include "World.h"
 
-class GameState : public State
+class GemeOverState : public State
 {
 public:
-	GameState(StateStack* stack, Context& context);
+	GemeOverState(StateStack* stack, Context& context);
 
-	//~GameState();
+	~GemeOverState();
 
 	virtual bool update(const sf::Time& dt);
 	virtual bool handleEvent(const sf::Event& event);
@@ -16,7 +15,8 @@ public:
 	virtual void draw();
 
 private:
-	World m_world;
+	sf::RectangleShape m_rect;
+	sf::Text m_game_over_text;
+	sf::Text m_info_text;
 
-	
 };

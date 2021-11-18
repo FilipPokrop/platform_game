@@ -16,6 +16,10 @@ State::State(StateStack* stack, Context& context)
 {
 }
 
+State::~State()
+{
+}
+
 void State::reqestStackPush(StateID id)
 {
 	m_stack->pushState(id);

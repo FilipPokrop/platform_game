@@ -25,6 +25,8 @@ public:
 
 	State(StateStack* stack, Context& context);
 
+	virtual ~State();
+
 	//return true if update/handleEvent next state
 	virtual bool handleEvent(const sf::Event& event) = 0;
 	virtual bool handleEvents() = 0;

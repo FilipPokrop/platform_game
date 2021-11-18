@@ -13,9 +13,9 @@ int main()
     uint32_t frame_counter = 0;
     sf::Time frame_time = sf::Time::Zero;
     FontHolder fonts;
-    fonts.load(Fonts::Menu, "media/fonts/Sansation.ttf");
+    fonts.load(Fonts::Menu, "media/fonts/80s-retro-future.ttf");
     //.loadFromFile("media/fonts/Sansation.ttf");
-    sf::Text frames("FPS: "+std::to_string(frame_counter),fonts.get(Fonts::Menu));
+    sf::Text frames("FPS: "+std::to_string(frame_counter),fonts.get(Fonts::Menu),32);
     
     sf::RenderWindow window(sf::VideoMode(640*2, 480*2), "SFML works!",sf::Style::None);
     window.setKeyRepeatEnabled(false);

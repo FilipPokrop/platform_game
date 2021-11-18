@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include <iostream>
 
 class Duck : public Enemy
 {
@@ -11,6 +12,7 @@ public:
 	};
 
 	Duck(const sf::Texture& texture);
+	//~Duck() { std::cout << "Duck"; }
 
 	virtual sf::FloatRect getGlobalBounds() const;
 	virtual void setState();

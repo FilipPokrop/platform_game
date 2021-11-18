@@ -20,6 +20,8 @@ set(SOURCES
     src/State.cpp
     src/StateStack.cpp
     src/GameState.cpp
+    src/GameOverState.cpp
+    src/MainCharacter.cpp
 )
 
 set(HEADERS
@@ -40,6 +42,8 @@ set(HEADERS
     include/StateStack.h
     include/StateIdentifiers.h
     include/GameState.h
+    include/GameOverState.h
+    include/MainCharacter.h
 )
 
 add_executable(game ${SOURCES} ${HEADERS})
