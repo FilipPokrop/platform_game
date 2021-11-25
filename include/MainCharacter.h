@@ -29,16 +29,18 @@ public:
 	void moveUp();
 	void moveDown();
 
-	sf::Vector2f getCenter() const;
+	
 
 	virtual sf::FloatRect getGlobalBounds() const;
 	virtual void setState();
 
-	virtual void getAtack(int lives);
+	//virtual void hit(int lives);
+	virtual void hit(int lives, float dir);
 
 private:
 	bool m_try_jump;
 	bool m_is_hited;
+	bool m_dir;
 	States m_current_state;
 
 };

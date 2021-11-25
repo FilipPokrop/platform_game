@@ -28,7 +28,10 @@ public:
 
 	bool isAlive() const;
 	void kill();
-	virtual void getAtack(int lives);
+	virtual void hit(int lives, float dir=0);
+
+	sf::Vector2f getCenter() const;
+	
 	int getLives() const;
 
 

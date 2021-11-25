@@ -1,7 +1,7 @@
 #include "Collision.h"
 #include <iostream>
 #include <iomanip>
-Colision::ContactData::ContactData()
+Collision::ContactData::ContactData()
 	:contact(false),
 	contact_point(0.f,0.f),
 	contact_normal(0.f,0.f),
@@ -9,12 +9,12 @@ Colision::ContactData::ContactData()
 {
 }
 
-Colision::ContactData::operator bool() const
+Collision::ContactData::operator bool() const
 {
 	return contact;
 }
 
-const Colision::ContactData Colision::rayVsRect(const sf::Vector2f& ray_origin, const sf::Vector2f& ray_dir, const sf::FloatRect& rect)
+const Collision::ContactData Collision::rayVsRect(const sf::Vector2f& ray_origin, const sf::Vector2f& ray_dir, const sf::FloatRect& rect)
 {
 	ContactData contact;
 
@@ -56,7 +56,7 @@ const Colision::ContactData Colision::rayVsRect(const sf::Vector2f& ray_origin, 
 	return contact;
 }
 
-const Colision::ContactData Colision::dynamicRectvsRect(const Entity& entity, const sf::FloatRect& rect, sf::Time dt)
+const Collision::ContactData Collision::dynamicRectvsRect(const Entity& entity, const sf::FloatRect& rect, sf::Time dt)
 {
 	sf::Vector2f dir = (entity.getVelocity() + entity.getAcceleration() * dt.asSeconds() * 0.5f) * dt.asSeconds();
 	if(dir==sf::Vector2f(0.f,0.f))
@@ -76,7 +76,7 @@ const Colision::ContactData Colision::dynamicRectvsRect(const Entity& entity, co
 	return data;
 }
 
-const Colision::ContactData Colision::dynamicRectvsDynamicRect(const Entity& entity, const Entity& player, sf::Time dt)
+const Collision::ContactData Collision::dynamicRectvsDynamicRect(const Entity& entity, const Entity& player, sf::Time dt)
 {
 	sf::Vector2f dir = player.getDirection(dt) - entity.getDirection(dt);
 	if (dir == sf::Vector2f(0.f, 0.f))
@@ -97,7 +97,7 @@ const Colision::ContactData Colision::dynamicRectvsDynamicRect(const Entity& ent
 	return data;
 }
 
-const bool Colision::resolveDynamicRectvsRect(Entity& entity, const sf::FloatRect& rect, sf::Time dt)
+const bool Collision::resolveDynamicRectvsRect(Entity& entity, const sf::FloatRect& rect, sf::Time dt)
 {
 	ContactData contact = dynamicRectvsRect(entity, rect, dt);
 	if (contact)

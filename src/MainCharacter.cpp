@@ -67,11 +67,7 @@ void MainCharacter::moveDown()
 	addVelocity(sf::Vector2f(0.f, 100.f));
 }
 
-sf::Vector2f MainCharacter::getCenter() const
-{
-	sf::FloatRect rect = getGlobalBounds();
-	return sf::Vector2f(rect.left + rect.width * 0.5f, rect.top + rect.height * 0.5f);
-}
+
 
 
 
@@ -88,8 +84,8 @@ void MainCharacter::setState()
 
 	if (m_is_hited)
 	{
-		if (m_state_time < sf::seconds(0.7))
-			new_state = (States)(HitLeft | (new_state & 1));
+		if (m_state_time < sf::seconds(1))
+			new_state = (States)(HitLeft | m_dir);
 		else
 			m_is_hited = false;
 	}
@@ -120,9 +116,17 @@ void MainCharacter::setState()
 	}
 }
 
-void MainCharacter::getAtack(int lives)
+
+
+void MainCharacter::hit(int lives, float dir)
 {
-	Entity::getAtack(lives);
+	
+		//m_current_state = m_current_state|
+	Entity::hit(lives);
+	if (dir < 0)
+		m_dir = 1;
+	else
+		m_dir = 0;
 	m_is_hited = true;
 	m_state_time = sf::Time::Zero;
 
@@ -130,5 +134,5 @@ void MainCharacter::getAtack(int lives)
 		m_velocity.y = 0;
 	m_velocity.y -= 300;
 	//m_velocity.x = 0;
-
+	
 }

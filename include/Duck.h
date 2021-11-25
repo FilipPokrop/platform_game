@@ -18,7 +18,7 @@ public:
 	virtual void setState();
 
 
-	virtual void colisionWithPlayer(Entity* player, const Colision::ContactData& contact_data);
+	virtual void colisionWithPlayer(Entity* player, const Collision::ContactData& contact_data);
 
 	void update(const sf::Time dt);
 	

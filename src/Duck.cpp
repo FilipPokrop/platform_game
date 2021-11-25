@@ -19,7 +19,7 @@ void Duck::setState()
 {
 }
 
-void Duck::colisionWithPlayer(Entity* player, const Colision::ContactData& contact_data)
+void Duck::colisionWithPlayer(Entity* player, const Collision::ContactData& contact_data)
 {
 	if (contact_data)
 	{
@@ -33,7 +33,7 @@ void Duck::colisionWithPlayer(Entity* player, const Colision::ContactData& conta
 
 		else
 		{
-			player->getAtack(1);
+			player->hit(1,contact_data.contact_normal.x);
 		}
 	}
 }

@@ -22,6 +22,7 @@ set(SOURCES
     src/GameState.cpp
     src/GameOverState.cpp
     src/MainCharacter.cpp
+    src/Slime.cpp
 )
 
 set(HEADERS
@@ -44,6 +45,7 @@ set(HEADERS
     include/GameState.h
     include/GameOverState.h
     include/MainCharacter.h
+    include/Slime.h
 )
 
 add_executable(game ${SOURCES} ${HEADERS})

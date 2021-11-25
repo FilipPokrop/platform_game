@@ -11,6 +11,7 @@ enum class Textures
 {
 	Player,
 	Duck,
+	Slime,
 	Map,
 	WorldGui
 };

@@ -2,12 +2,13 @@
 
 
 World::World(sf::RenderWindow* window, const TextureHolder& texture_holder)
-	:m_window(window),
+    :m_window(window),
     m_texture_holder(texture_holder),
-	m_main_character(nullptr),
-	m_map(nullptr),
+    m_main_character(nullptr),
+    m_map(nullptr),
     m_lives(texture_holder.get(Textures::WorldGui)),
-    m_view()
+    m_view(),
+    m_player("media/config/key.conf")
 {
     m_main_character = new MainCharacter(m_texture_holder.get(Textures::Player));
     m_map = new TileMap(m_texture_holder.get(Textures::Map));
@@ -21,6 +22,17 @@ World::World(sf::RenderWindow* window, const TextureHolder& texture_holder)
     duck = new Duck(m_texture_holder.get(Textures::Duck));
     duck->setPosition(667, 460);
     m_enemis.push_back(duck);
+
+    Slime* slime = new Slime(m_texture_holder.get(Textures::Slime));
+    slime->setPosition(sf::Vector2f(400, 466));
+    slime->setLeftBorder(*m_map);
+    slime->setRightBorder(*m_map);
+    m_enemis.push_back(slime);
+    slime = new Slime(m_texture_holder.get(Textures::Slime));
+    slime->setPosition(sf::Vector2f(400, 66));
+    slime->setLeftBorder(*m_map);
+    slime->setRightBorder(*m_map);
+    m_enemis.push_back(slime);
     //m_view.setViewport(sf::FloatRect(0.f, 0.f, 2.f, 2.f));
 }
 
@@ -125,31 +137,8 @@ bool World::handleEvent(const sf::Event& event)
 
 bool World::handleEvents()
 {
-    bool _break = false;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-        m_main_character->jump();
-        _break = true;
-    }
-		
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        m_main_character->moveRight();
-        _break = true;
-    }
-		
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        m_main_character->moveLeft();
-        _break = true;
-    }
-		
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        m_main_character->jump();
-        _break = true;
-    }
-    return _break;
+    m_player.handleEvents(m_main_character);
+    return true;
 	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		m_player->moveDown();*/
 }
@@ -177,7 +166,7 @@ void World::checkCollisionPlayerVsMap(const sf::Time& dt)
     std::vector<std::pair<float, sf::FloatRect>> colide_rect;
     for (auto& r : rects)
     {
-        Colision::ContactData col = Colision::dynamicRectvsRect(*m_main_character, r, dt);
+        Collision::ContactData col = Collision::dynamicRectvsRect(*m_main_character, r, dt);
         if (col)
         {
             colide_rect.push_back(std::make_pair(col.contact_time, r));
@@ -192,7 +181,7 @@ void World::checkCollisionPlayerVsMap(const sf::Time& dt)
     for (auto& i : colide_rect)
     {
         //std::cout << i.second.left/32 << " " << i.second.top / 32 << "; ";
-        Colision::resolveDynamicRectvsRect(*m_main_character, i.second, dt);
+        Collision::resolveDynamicRectvsRect(*m_main_character, i.second, dt);
     }
 }
 
@@ -201,12 +190,12 @@ void World::checkCollisionPlayerVsEnemy(const sf::Time& dt)
     
     for (auto iter = m_enemis.begin(); iter != m_enemis.end(); iter++)
     {
-        Colision::ContactData data = Colision::dynamicRectvsDynamicRect(**iter, *m_main_character, dt);
+        Collision::ContactData data = Collision::dynamicRectvsDynamicRect(**iter, *m_main_character, dt);
         (*iter)->colisionWithPlayer(m_main_character, data);
     }
 }
 
 bool World::endGame()
 {
-    return !m_main_character->isAlive() && m_main_character->getPosition().y > m_map->getWorldSize().y + m_map->getScreenSize().y;
+    return m_main_character->getPosition().y > m_map->getWorldSize().y + m_map->getScreenSize().y;
 }

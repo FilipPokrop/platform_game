@@ -11,6 +11,7 @@
 #include "ResourceIdentifiers.h"
 #include "Lives.h"
 #include "MainCharacter.h"
+#include "Slime.h"
 
 class World
 {
@@ -37,6 +38,7 @@ private:
 	const TextureHolder& m_texture_holder;
 
 	MainCharacter* m_main_character;
+	Player m_player;
 	TileMap* m_map;
 	Lives m_lives;
 

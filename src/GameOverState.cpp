@@ -4,7 +4,7 @@ GemeOverState::GemeOverState(StateStack* stack, Context& context)
 	:State(stack, context),
 	m_rect(sf::Vector2f(getContext().window->getSize())),
 	m_game_over_text("GAME OVER", context.font_holder->get(Fonts::Menu), 130),
-	m_info_text("PRESS SPACE TO RESET", context.font_holder->get(Fonts::Menu),39)
+	m_info_text("PRESS SPACE TO PLAY AGAIN", context.font_holder->get(Fonts::Menu),39)
 {
 	m_rect.setFillColor(sf::Color(31, 31, 31, 191));
 	m_game_over_text.setOrigin(sf::Vector2f(m_game_over_text.getGlobalBounds().width, m_game_over_text.getGlobalBounds().height) * 0.5f);

@@ -102,11 +102,19 @@ void Entity::kill()
 	m_is_alive = false;
 }
 
-void Entity::getAtack(int lives)
+void Entity::hit(int lives, float dir)
 {
 	m_lives -= lives;
 	if (m_lives < 0)
 		kill();
+}
+
+sf::Vector2f Entity::getCenter() const
+{
+	
+	sf::FloatRect rect = getGlobalBounds();
+	return sf::Vector2f(rect.left + rect.width * 0.5f, rect.top + rect.height * 0.5f);
+	
 }
 
 int Entity::getLives() const

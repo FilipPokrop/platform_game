@@ -29,6 +29,7 @@ int main()
     texture_holder.load(Textures::Duck, "media/Free/Enemies/Duck/Idle (36x36).png");
     texture_holder.load(Textures::Map, "media/Free/Terrain/Terrain (16x16).png");
     texture_holder.load(Textures::WorldGui, "media/textures/Gui/World.png");
+    texture_holder.load(Textures::Slime, "media/Free/Enemies/Slime/Idle-Run (44x30).png");
     
     State::Context context(texture_holder, fonts, window);
     StateStack state_stack(&context);

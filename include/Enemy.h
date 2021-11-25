@@ -9,7 +9,7 @@ public:
 	Enemy(const sf::Texture& texture);
 	~Enemy();
 	
-	virtual void colisionWithPlayer(Entity* player,const Colision::ContactData& contact_data) = 0;
+	virtual void colisionWithPlayer(Entity* player,const Collision::ContactData& contact_data) = 0;
 
 
 };

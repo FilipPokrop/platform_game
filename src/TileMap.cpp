@@ -1,4 +1,5 @@
 #include "TileMap.h"
+#include "..\include\TileMap.h"
 
 TileMap::TileMap(const sf::Texture& texture, sf::Vector2f map_size, float tile_size)
 	:m_data(),
@@ -53,7 +54,7 @@ void TileMap::update(const sf::Vector2f& player_pos)
 	}
 }
 
-const TileMapData& TileMap::getData()
+const TileMapData& TileMap::getData() const
 {
 	return m_data;
 }
@@ -92,6 +93,11 @@ void TileMap::setCenter(const sf::Vector2f& player_pos)
 sf::Vector2f TileMap::getWorldSize()
 {
 	return sf::Vector2f(m_data.getSize())*m_tile_size;
+}
+
+float TileMap::getTileSize() const
+{
+	return m_tile_size;
 }
 
 void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const

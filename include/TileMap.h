@@ -10,7 +10,7 @@ public:
 	TileMap(const sf::Texture& texture, sf::Vector2f map_size = sf::Vector2f(640,480), float tile_size = 16.f);
 	void setTexture(const sf::Texture& texture);
 	void update(const sf::Vector2f& player_pos);
-	const TileMapData& getData();
+	const TileMapData& getData() const;
 
 	sf::Vector2f getScreenSize();
 
@@ -18,6 +18,8 @@ public:
 	void setCenter(const sf::Vector2f& player_pos);
 
 	sf::Vector2f getWorldSize();
+
+	float getTileSize() const;
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

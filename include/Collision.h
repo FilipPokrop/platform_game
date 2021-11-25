@@ -2,7 +2,7 @@
 
 #include "Entity.h"
 
-class Colision
+class Collision
 {
 public:
 	struct ContactData
