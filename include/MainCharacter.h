@@ -18,7 +18,9 @@ public:
 		HitLeft,
 		HitRight,
 		DieLeft,
-		DieRight
+		DieRight,
+		WallJumpLeft,
+		WallJumpRight
 	};
 	MainCharacter(const sf::Texture& texture);
 
@@ -28,6 +30,7 @@ public:
 	void moveRight();
 	void moveUp();
 	void moveDown();
+	void catchWall();
 
 	
 
@@ -36,11 +39,16 @@ public:
 
 	//virtual void hit(int lives);
 	virtual void hit(int lives, float dir);
+	virtual void reactOnCollision(const Collision::ContactData& contact_data);
+	virtual void colisionWithPlayer(Entity* player, const Collision::ContactData& contact_data);
 
 private:
 	bool m_try_jump;
+	bool m_try_catch_wall;
+	bool m_double_jump;
 	bool m_is_hited;
 	bool m_dir;
+	bool m_on_wall;
 	States m_current_state;
 
 };

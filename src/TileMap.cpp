@@ -10,7 +10,8 @@ TileMap::TileMap(const sf::Texture& texture, sf::Vector2f map_size, float tile_s
 	m_tile_size(tile_size),
 	m_size_in_tile(sf::Vector2u((map_size /tile_size + sf::Vector2f(0.5f, 0.5f)))+sf::Vector2u(1,1))
 {
-	m_data.loadFromFile("media/maps/02.map");
+	m_data.loadFromFile("media/maps/03.map");
+	m_enemies.loadFromFile("media/enemies/03.ene");
 	size_t size = m_size_in_tile.x * m_size_in_tile.y * 4;
 	m_vertex.resize(size);
 }
@@ -57,6 +58,11 @@ void TileMap::update(const sf::Vector2f& player_pos)
 const TileMapData& TileMap::getData() const
 {
 	return m_data;
+}
+
+EnemiesData& TileMap::getEnemies()
+{
+	return m_enemies;
 }
 
 sf::Vector2f TileMap::getScreenSize()

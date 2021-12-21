@@ -6,10 +6,19 @@
 class Enemy : public Entity
 {
 public:
+
+	enum class Type
+	{
+		None = -1,
+		AngryPig,
+		Slime
+
+	};
+
 	Enemy(const sf::Texture& texture);
 	~Enemy();
 	
-	virtual void colisionWithPlayer(Entity* player,const Collision::ContactData& contact_data) = 0;
+	
 
 
 };

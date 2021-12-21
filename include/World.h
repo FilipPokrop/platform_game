@@ -12,6 +12,7 @@
 #include "Lives.h"
 #include "MainCharacter.h"
 #include "Slime.h"
+#include "EntityManager.h"
 
 class World
 {
@@ -42,7 +43,7 @@ private:
 	TileMap* m_map;
 	Lives m_lives;
 
-	std::list<Enemy*> m_enemis;
+	EntityManager m_entites;
 
 	sf::View m_view;
 };

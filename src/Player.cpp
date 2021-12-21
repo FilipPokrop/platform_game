@@ -39,6 +39,7 @@ void Player::bindActions()
 	m_action_binding[Action::Jump] = &MainCharacter::jump;
 	m_action_binding[Action::MoveLeft] = &MainCharacter::moveLeft;
 	m_action_binding[Action::MoveRight] = &MainCharacter::moveRight;
+	m_action_binding[Action::CatchWall] = &MainCharacter::catchWall;
 }
 
 void Player::assignKey(sf::Keyboard::Key key, Action action)
@@ -60,6 +61,7 @@ bool Player::isRealtimeAction(Action action)
 	case Action::Jump:
 	case Action::MoveLeft:
 	case Action::MoveRight:
+	case Action::CatchWall:
 		return true;
 		break;
 	default:

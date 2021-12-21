@@ -2,8 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
+#include "Collision.h"
 
 //#define DEB
+
 
 class Entity: public sf::Drawable, public sf::Transformable
 {
@@ -34,6 +36,8 @@ public:
 	
 	int getLives() const;
 
+	virtual void reactOnCollision(const Collision::ContactData& contact_data);
+	virtual void colisionWithPlayer(Entity* player, const Collision::ContactData& contact_data) = 0;
 
 	static const float gravity;
 

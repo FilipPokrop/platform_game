@@ -8,40 +8,22 @@ World::World(sf::RenderWindow* window, const TextureHolder& texture_holder)
     m_map(nullptr),
     m_lives(texture_holder.get(Textures::WorldGui)),
     m_view(),
-    m_player("media/config/key.conf")
+    m_player("media/config/key.conf"),
+    m_entites(texture_holder)
 {
     m_main_character = new MainCharacter(m_texture_holder.get(Textures::Player));
     m_map = new TileMap(m_texture_holder.get(Textures::Map));
     m_view.reset(sf::FloatRect(sf::Vector2f(0, 0), m_map->getScreenSize()));
-    Duck* duck = new Duck(texture_holder.get(Textures::Duck));
-    duck->setPosition(170, 332);
-    m_enemis.push_back(duck);
-    duck = new Duck(m_texture_holder.get(Textures::Duck));
-    duck->setPosition(70, 428);
-    m_enemis.push_back(duck);
-    duck = new Duck(m_texture_holder.get(Textures::Duck));
-    duck->setPosition(667, 460);
-    m_enemis.push_back(duck);
+    m_entites.addEntitiesFromMap(m_map);
+    
 
-    Slime* slime = new Slime(m_texture_holder.get(Textures::Slime));
-    slime->setPosition(sf::Vector2f(400, 466));
-    slime->setLeftBorder(*m_map);
-    slime->setRightBorder(*m_map);
-    m_enemis.push_back(slime);
-    slime = new Slime(m_texture_holder.get(Textures::Slime));
-    slime->setPosition(sf::Vector2f(400, 66));
-    slime->setLeftBorder(*m_map);
-    slime->setRightBorder(*m_map);
-    m_enemis.push_back(slime);
+    
     //m_view.setViewport(sf::FloatRect(0.f, 0.f, 2.f, 2.f));
 }
 
 World::~World()
 {
-    for (auto iter = m_enemis.begin(); iter != m_enemis.end(); iter ++)
-    {
-        delete* iter;
-    }
+   
 
     delete m_main_character;
     delete m_map;
@@ -58,24 +40,7 @@ void World::update(const sf::Time& dt)
     }
     
 	m_main_character->update(dt);
-    if (!m_enemis.empty())
-    {
-        for (auto iter = m_enemis.begin(); iter != m_enemis.end();)
-        {
-            (*iter)->update(dt);
-            if (!(*iter)->isAlive())
-            {
-                delete* iter;
-                iter = m_enemis.erase(iter);
-                //if (iter == m_enemis.end())
-                    //break;
-            }
-            else
-            {
-                iter++;
-            }
-        }
-    }
+    m_entites.update(dt);
     
 
 	m_map->update(m_main_character->getCenter());
@@ -88,15 +53,10 @@ void World::draw()
     m_view.setCenter(m_map->getCenter());
     m_window->setView(m_view);
 	m_window->draw(*m_map);
-    if (!m_enemis.empty())
-    {
-        for (auto iter = m_enemis.begin(); iter != m_enemis.end(); iter++)
-        {
-            m_window->draw(**iter);
-        }
-    }
-    
+
+    m_window->draw(m_entites);   
 	m_window->draw(*m_main_character);
+
     m_window->setView(m_window->getDefaultView());
     m_window->draw(m_lives);
 }
@@ -188,11 +148,7 @@ void World::checkCollisionPlayerVsMap(const sf::Time& dt)
 void World::checkCollisionPlayerVsEnemy(const sf::Time& dt)
 {
     
-    for (auto iter = m_enemis.begin(); iter != m_enemis.end(); iter++)
-    {
-        Collision::ContactData data = Collision::dynamicRectvsDynamicRect(**iter, *m_main_character, dt);
-        (*iter)->colisionWithPlayer(m_main_character, data);
-    }
+    m_entites.checkCollisionWithPlayer(dt, m_main_character);
 }
 
 bool World::endGame()

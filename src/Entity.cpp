@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+
 #include<iostream>
 #include <iomanip>
 Entity::Entity(const sf::Texture& texture, int lives)
@@ -120,6 +121,10 @@ sf::Vector2f Entity::getCenter() const
 int Entity::getLives() const
 {
 	return m_lives;
+}
+
+void Entity::reactOnCollision(const Collision::ContactData& contact_data)
+{
 }
 
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const

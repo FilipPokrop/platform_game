@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "TileMapData.h"
+#include "EnemiesData.h"
 
 class TileMap:public sf::Drawable, sf::Transformable
 {
@@ -11,6 +12,7 @@ public:
 	void setTexture(const sf::Texture& texture);
 	void update(const sf::Vector2f& player_pos);
 	const TileMapData& getData() const;
+	EnemiesData& getEnemies();
 
 	sf::Vector2f getScreenSize();
 
@@ -26,6 +28,7 @@ private:
 
 private:
 	TileMapData m_data;
+	EnemiesData m_enemies;
 	const sf::Texture& m_texture;
 	sf::VertexArray m_vertex;
 	sf::Vector2f m_size;

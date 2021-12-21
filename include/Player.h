@@ -17,6 +17,7 @@ class Player
 		MoveLeft,
 		MoveRight,
 		Jump,
+		CatchWall
 	};
 public:
 	Player(const std::string& filename = "");
@@ -31,6 +32,8 @@ public:
 
 	void handleEvent(const sf::Event& event, MainCharacter* character);
 	void handleEvents(MainCharacter* character);
+
+
 
 private:
 

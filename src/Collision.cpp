@@ -1,4 +1,7 @@
 #include "Collision.h"
+
+#include "Entity.h"
+
 #include <iostream>
 #include <iomanip>
 Collision::ContactData::ContactData()
@@ -113,8 +116,7 @@ const bool Collision::resolveDynamicRectvsRect(Entity& entity, const sf::FloatRe
 		entity.addVelocity(vel);
 		entity.addAcceleration(acc);
 		//std::cout << contact.contact_time << ' ' << entity.getVelocity().y << " " << entity.getAcceleration().y<< " ";
-		if (contact.contact_normal.y < 0)
-			entity.setOnGround(true);
+		entity.reactOnCollision(contact);
 		return true;
 	}
 	return false;
